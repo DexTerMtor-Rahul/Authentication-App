@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import userRoutes from "./routes/user.route.js";
 
 // The app's logic can use this value to access the right set of resources or enable/disable certain features or sections of the app.
 import dotenv from "dotenv";
@@ -19,3 +20,6 @@ const app = express();
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
+
+// app.use() is used to add middleware to the application stack.
+app.use("/api/user", userRoutes);
