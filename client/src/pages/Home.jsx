@@ -1,3 +1,7 @@
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <div className="flex h-fit m-auto">
+      <div className="bg-indigo-100 ">Home</div>
+    </div>
+  );
 }
