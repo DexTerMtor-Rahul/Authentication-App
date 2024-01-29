@@ -30,3 +30,14 @@ app.use("/api/user", userRoutes);
 
 //authRoutes is a middleware function that will be called when a POST request is made to the /api/auth/ path.
 app.use("/api/auth", authRoutes);
+
+// error handling middleware function that will be called when an error occurs.
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(statusCode).json({
+    success: false,
+    message,
+    statusCode,
+  });
+});
