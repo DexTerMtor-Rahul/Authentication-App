@@ -6,7 +6,7 @@ import { errorHandler } from "../utils/error.js";
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
-  const hashPassword = bcrypt.hashSync(password, 12);
+  const hashPassword = bcrypt.hashSync(password, 10);
   const user = new User({ username, email, password: hashPassword });
   try {
     await user.save();
