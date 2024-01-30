@@ -1,17 +1,14 @@
-// signup controller for auth route
 import User from "../models/user.model.js";
-// bcrypt is used to hash the password before saving it to the database so that no one can see the password.
-import bcrypt from "bcryptjs";
+import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
-
 import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
-  const hashPassword = bcrypt.hashSync(password, 10);
-  const user = new User({ username, email, password: hashPassword });
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const newUser = new User({ username, email, password: hashedPassword });
   try {
-    await user.save();
+    await newUser.save();
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     next(error);
@@ -25,7 +22,7 @@ export const signin = async (req, res, next) => {
     if (!validUser) {
       return next(errorHandler(404, "User not found!"));
     }
-    const validPassword = bcrypt.compareSync(password, validUser.password);
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) {
       return next(errorHandler(401, "Wrong credentials!"));
     }
@@ -46,7 +43,6 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        maxAge: 60 * 60 * 1000, // 1 hour
       })
       .status(200)
       .json(rest);

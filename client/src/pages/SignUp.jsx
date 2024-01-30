@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({}); // {username: "", email: "", password: ""}
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -34,6 +36,7 @@ export default function SignUp() {
         setError(true);
         return;
       }
+      navigate("/sign-in");
     } catch (error) {
       setLoading(false);
       setError(true);
@@ -41,10 +44,10 @@ export default function SignUp() {
   };
 
   return (
-    <div className="bg-indigo-50 min-h-screen flex flex-col">
-      <div className="mx-auto my-3 flex-1 flex flex-col items-center justify-center px-2 ">
-        <div className="bg-white w-full rounded-lg shadow-md px-8 py-8 ">
-          <h1 className="mb-8 text-3xl text-center">Sign Up</h1>
+    <div className="bg-indigo-50 min-h-screen">
+      <div className="mx-auto flex flex-col items-center justify-center px-2 md:mt-0 sm:max-w-md xl:p-0  ">
+        <div className="mt-10 bg-white w-full rounded-lg shadow-md px-8 py-8 ">
+          <h1 className="mb-8 text-3xl text-center font-semibold">Sign Up</h1>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
