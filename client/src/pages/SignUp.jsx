@@ -42,7 +42,7 @@ export default function SignUp() {
 
   return (
     <div className="bg-indigo-50 min-h-screen flex flex-col">
-      <div className="mx-auto flex-1 flex flex-col items-center justify-center px-2 ">
+      <div className="mx-auto my-3 flex-1 flex flex-col items-center justify-center px-2 ">
         <div className="bg-white w-full rounded-lg shadow-md px-8 py-8 ">
           <h1 className="mb-8 text-3xl text-center">Sign Up</h1>
           <form onSubmit={handleSubmit}>
