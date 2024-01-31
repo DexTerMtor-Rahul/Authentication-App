@@ -1,6 +1,14 @@
 import User from "../models/user.model.js";
+
+// bcryptjs is a library to help you hash passwords.
 import bcryptjs from "bcryptjs";
+
+// errorHandler is a function that will be called when an error occurs.
 import { errorHandler } from "../utils/error.js";
+
+// jsonwebtoken is a library to help you generate JWTs.
+// JWTs are used to authenticate users.
+// JWTs are also used to protect routes.
 import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
