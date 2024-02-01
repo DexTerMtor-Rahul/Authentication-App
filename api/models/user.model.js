@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // profilePic: {
-    //   type: String,
-    //   default: "",
-    // },
+    profilePic: {
+      type: String,
+      default: "",
+    },
   },
   //   timestamps: true is used to add createdAt and updatedAt time automatically
   { timestamps: true }

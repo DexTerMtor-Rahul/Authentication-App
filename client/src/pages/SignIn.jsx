@@ -6,6 +6,7 @@ import {
   signInSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({}); // {username: "", email: "", password: ""}
@@ -73,9 +74,10 @@ export default function SignIn() {
             <button
               disabled={loading}
               type="submit"
-              className="w-full text-center py-3 rounded-lg bg-green text-white bg-indigo-700 hover:opacity-85 disabled:opacity-80 focus:outline-none my-1">
+              className="w-full text-center py-3 rounded-lg text-white bg-indigo-700 hover:opacity-85 disabled:opacity-80 focus:outline-none my-1">
               {loading ? "Loading..." : "Sign In"}
             </button>
+            <OAuth />
           </form>
         </div>
         <div className="text-grey-dark mt-6">

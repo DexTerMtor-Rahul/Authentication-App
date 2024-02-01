@@ -58,3 +58,75 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
+
+// Google OAuth
+// 1. The client sends the user’s Google access token to the server.
+// 2. The server verifies the access token with Google.
+// 3. If the access token is valid, the server creates a new user or returns an existing user.
+// 4. The server creates a JWT and sends it to the client.
+// 5. The client saves the JWT in the cookie.
+// 6. The client sends the JWT in the cookie to the server.
+// 7. The server verifies the JWT.
+// 8. If the JWT is valid, the server returns the user data.
+// 9. The client saves the user data in the global state.
+// 10. The user is authenticated.
+
+export const google = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      // If the user exists, we generate a JWT and send it to the client.
+      // We also send the user data to the client.
+      // The user data is used to update the global state.
+
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const { password: hashedPassword, ...rest } = user._doc;
+      const expiryDate = new Date(Date.now() + 3600000); // 1 hour
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          expires: expiryDate,
+        })
+        .status(200)
+        .json(rest);
+    } else {
+      // If the user doesn’t exist, we create a new user.
+      // We generate a random password and hash it.
+      // We use the random password as the user’s password.
+      // We also generate a username using the user’s name.
+      // We use the random password as the user’s password.
+      // We also generate a username using the user’s name.
+
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+      const newUser = new User({
+        username:
+          req.body.name.split(" ").join("").toLowerCase() +
+          Math.random().toString(36).slice(-8),
+        email: req.body.email,
+        password: hashedPassword,
+        profilePicture: req.body.photo,
+      });
+      // We save the new user to the database.
+      // We generate a JWT and send it to the client.
+      // We also send the user data to the client.
+      // The user data is used to update the global state.
+
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const { password: hashedPassword2, ...rest } = newUser._doc;
+      const expiryDate = new Date(Date.now() + 3600000); // 1 hour
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          expires: expiryDate,
+        })
+        .status(200)
+        .json(rest);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
