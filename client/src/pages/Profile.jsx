@@ -20,6 +20,7 @@ export default function Profile() {
     if (image) {
       handleFileUpload();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image]);
 
   const handleFileUpload = async (image) => {
