@@ -103,6 +103,7 @@ export default function Profile() {
     }
   };
 
+  // sign out functionality here ...
   const handleSignOut = async () => {
     try {
       await fetch("/api/auth/signout");
