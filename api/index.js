@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 // The app's logic can use this value to access the right set of resources or enable/disable certain features or sections of the app.
 import dotenv from "dotenv";
@@ -16,9 +17,16 @@ mongoose
   })
   .catch((err) => console.error(err));
 
+const __dirname = path.resolve();
+
 // First step to connect express server
 const app = express();
 
+app.use(express.static(path.join(__dirname, "/client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 // express.json() is a method inbuilt in express to recognize the incoming Request Object as a JSON Object.
 app.use(express.json());
 

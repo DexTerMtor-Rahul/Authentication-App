@@ -33,6 +33,7 @@ export default function Profile() {
     if (image) {
       handleFileUpload(image);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image]);
 
   const handleFileUpload = async (image) => {
@@ -40,6 +41,7 @@ export default function Profile() {
     const fileName = new Date().getTime() + image.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, image);
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
